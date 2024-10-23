@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Producto - AURA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8; /* Color de fondo más claro */
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #4a4949;
+            font-weight: 600;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+            max-width: 1600px;
+            margin: auto;
+        }
+
+        .product-container {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 200%;
+            max-width: 1100px;
+            padding: 25px;
+            margin-left: 20px; /* Espacio entre miniaturas y contenedor */
+        }
+
+        .product-image {
+            max-width: 450px;
+            width: 100%;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .thumbnail-list {
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+
+        .thumbnail-list img {
+            max-width: 80px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s; /* Efecto al pasar el mouse */
+        }
+
+        .thumbnail-list img:hover {
+            border-color: #007bff; /* Resaltar miniaturas al pasar el mouse */
+        }
+
+        .product-info {
+            padding: 20px;
+            max-width: 650px;
+        }
+
+        .product-info h4 {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .product-info p {
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .product-info .price {
+            font-size: 28px;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .product-info .discount {
+            color: #dc3545;
+            font-size: 20px;
+            margin-left: 10px;
+            text-decoration: line-through;
+        }
+
+        .product-info .shipping-info {
+            font-size: 18px;
+            color: #007bff;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #007bff; /* Cambiar el color de fondo */
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Efecto al pasar el mouse */
+        }
+
+        .size-options {
+            margin-top: 20px;
+        }
+
+        .size-options select {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .product-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .thumbnail-list {
+                margin-bottom: 20px;
+            }
+
+            .product-image {
+                max-width: 100%; /* Ajustar imagen para pantallas pequeñas */
+            }
+        }
+    </style>
+ </style>
+</head>
+<body>
+    <header>
+        <h1>AURA</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="notification" id="notification">Producto agregado al carrito</div>
+
+    <main>
+        <div class="thumbnail-list">
+            <img src="css/img/camisa01.png" alt="Thumbnail 1" onclick="changeImage('css/img/camisa01.png')">
+            <img src="img1.jpg" alt="Thumbnail 1" onclick="changeImage('img1.jpg')">
+            <img src="img2.jpg" alt="Thumbnail 2" onclick="changeImage('img2.jpg')">
+            <img src="img3.jpg" alt="Thumbnail 3" onclick="changeImage('img3.jpg')">
+        </div>
+
+        <div class="product-container">
+            <img id="product-image" class="product-image" src="img1.jpg" alt="Producto">
+            <div class="product-info">
+                <h4 id="product-name">Camisa oversize negra</h4>
+                <p id="product-price" class="price">Precio: $499 <span class="discount">$599</span></p>
+                <p id="product-shipping" class="shipping-info">Envío: Gratis</p>
+                <p id="product-size">Talla: M</p>
+                <p id="product-description">Descripción del producto 1.</p>
+
+                <div class="size-options">
+                    <label for="size">Talla:</label>
+                    <select id="size">
+                        <option value="S">S</option>
+                        <option value="M" selected>M</option>
+                        <option value="L">L</option>
+                    </select>
+                </div>
+
+                <div class="button-container">
+                    <button id="buy-button">Comprar</button>
+                    <button onclick="addToCart()">Agregar al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AURA. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        function getProductDetails() {
+            // Obtener los detalles del producto desde la URL o base de datos
+            const urlParams = new URLSearchParams(window.location.search);
+            const productName = urlParams.get('name');
+            const productImage = urlParams.get('image');
+            const productPrice = urlParams.get('price');
+            const productDescription = urlParams.get('description');
+
+            document.getElementById('product-name').innerText = productName;
+            document.getElementById('product-image').src = productImage;
+            document.getElementById('product-price').innerText = 'Precio: $' + productPrice;
+            document.getElementById('product-description').innerText = productDescription;
+        }
+
+        function addToCart() {
+            const productName = document.getElementById('product-name').innerText;
+            const productPrice = document.getElementById('product-price').innerText.split('$')[1];
+            const productSize = document.getElementById('size').value;
+            const productImage = document.getElementById('product-image').src;
+
+            const cartItem = {
+                name: productName,
+                price: parseFloat(productPrice),
+                size: productSize,
+                quantity: 1,
+                image: productImage
+            };
+
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.push(cartItem);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
+            showNotification();
+        }
+
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            notification.style.opacity = 1;
+
+            setTimeout(() => {
+                notification.style.opacity = 0;
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 500);
+            }, 2000);
+        }
+
+        function changeImage(imageSrc) {
+            document.getElementById('product-image').src = imageSrc;
+        }
+
+        window.onload = getProductDetails;
+    </script>
+</body>
+</html>

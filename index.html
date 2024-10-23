@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA - Tienda de Ropa de Gimnasio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Asegúrate de que el footer esté en la parte inferior */
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+        }
+
+        main {
+            flex: 1; /* Esto permite que el main ocupe el espacio restante */
+        }
+
+        /* Estilos para la notificación */
+        #notification-modal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: black; /* Color de fondo negro */
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+            display: none; /* Oculto por defecto */
+            z-index: 1000; /* Asegúrate de que esté en frente de otros elementos */
+            opacity: 0; /* Inicia invisible para la transición */
+            transform: translateY(-10px); /* Comienza ligeramente desplazado hacia arriba */
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Transiciones suaves para opacidad y posición */
+        }
+
+        #notification-modal.show {
+            display: block; /* Mostrar el modal */
+            opacity: 1; /* Hacerlo visible */
+            transform: translateY(0); /* Regresar a la posición original */
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navegación -->
+    <header>
+        <h1>AURA</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="contacto.html" target="_blank">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Sección Héroe -->
+        <section class="hero" id="inicio">
+            <div class="overlay">
+                <h2>Bienvenidos a AURA</h2>
+                <p>Ropa de gimnasio diseñada para ti.</p>
+            </div>
+        </section>
+
+        <!-- Productos Destacados -->
+        <section id="productos" class="seccion">
+            <h3>Productos Destacados</h3>
+            <div class="productos-grid" id="productos-grid">
+                <!-- Los productos se cargarán aquí dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Notificación -->
+        <div id="notification-modal">¡Producto agregado con éxito!</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AURA. Todos los derechos reservados.</p>
+        <p>
+            <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> | 
+            <a href="terminos-condiciones.html" target="_blank">Términos y Condiciones</a>
+        </p>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script>
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; // Recuperar el carrito del localStorage
+
+        // Datos de los productos
+        const productos = [
+            { title: 'Camisa overside negra', image: 'css/img/camisa01.png', price: 499, description: 'Descripción del producto 1.' },
+            { title: 'Camisa overside beig', image: 'css/img/camisa02.png', price: 499, description: 'Descripción del producto 2.' },
+            // Agrega más productos como necesites
+        ];
+
+        // Cargar los productos en la sección
+        const productosGrid = document.getElementById('productos-grid');
+        productos.forEach(producto => {
+            const div = document.createElement('div');
+            div.className = 'producto';
+            // Al hacer clic, redirigir a detallesProductos.html con parámetros
+            div.onclick = () => {
+                window.location.href = `detallesProductos.html?name=${encodeURIComponent(producto.title)}&image=${encodeURIComponent(producto.image)}&price=${producto.price}&description=${encodeURIComponent(producto.description)}`;
+            };
+            div.innerHTML = `<img src="${producto.image}" alt="${producto.title}">
+                             <h4>${producto.title}</h4>
+                             <p>$${producto.price}</p>`;
+            productosGrid.appendChild(div);
+        });
+
+        // Agregar al carrito
+        function addToCart() {
+            const title = document.getElementById('product-name').innerText;
+            const image = document.getElementById('product-image').src;
+            const price = parseFloat(document.getElementById('product-price').innerText.replace('$', ''));
+
+            const existingItem = cartItems.find(item => item.name === title);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cartItems.push({ name: title, image: image, price: price, quantity: 1 });
+            }
+            localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Guardar el carrito en localStorage
+
+            // Mostrar notificación
+            showNotification("¡Producto agregado con éxito!");
+        }
+        
+        // Función para mostrar la notificación
+        function showNotification(message) {
+            const notificationModal = document.getElementById('notification-modal');
+            notificationModal.innerText = message; // Establecer el texto del mensaje
+            notificationModal.classList.add('show'); // Añadir la clase para mostrar
+
+            // Ocultar el modal después de 3 segundos
+            setTimeout(() => {
+                notificationModal.classList.remove('show'); // Quitar la clase para ocultar
+            }, 3000); // 3000 ms = 3 segundos
+        }
+    </script>
+</body>
+</html>

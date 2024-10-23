@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - AURA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .productos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centrar los productos */
+            padding: 20px;
+        }
+
+        .producto {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 15px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center; /* Centrar el texto */
+            width: 200px; /* Ancho fijo para los productos */
+            transition: transform 0.2s; /* Transición suave al pasar el mouse */
+        }
+
+        .producto:hover {
+            transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+        }
+
+        .producto img {
+            max-width: 100%; /* Mantener imagen dentro del contenedor */
+            border-radius: 5px; /* Esquinas redondeadas */
+        }
+
+        h3 {
+            margin-bottom: 10px; /* Espaciado inferior */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AURA</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="contacto.html" target="_blank">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Productos Disponibles</h2>
+        <div class="productos-grid">
+            <!-- Producto 1 -->
+            <div class="producto" onclick="window.location.href='detallesProductos.html?name=Camisa overside negra&image=css/img/camisa01.png&price=499&description=Descripción del producto 1.'">
+                <img src="css/img/camisa01.png" alt="Camisa overside negra">
+                <h4>Camisa overside negra</h4>
+                <p>$499</p>
+            </div>
+            <!-- Producto 2 -->
+            <div class="producto" onclick="window.location.href='detallesProductos.html?name=Camisa overside beig&image=css/img/camisa02.png&price=499&description=Descripción del producto 2.'">
+                <img src="css/img/camisa02.png" alt="Camisa overside beig">
+                <h4>Camisa overside beig</h4>
+                <p>$499</p>
+            </div>
+            <!-- Agrega más productos según sea necesario -->
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 AURA. Todos los derechos reservados.</p>
+        <p>
+            <a href="politica-privacidad.html" target="_blank">Política de Privacidad</a> | 
+            <a href="terminos-condiciones.html" target="_blank">Términos y Condiciones</a>
+        </p>
+    </footer>
+</body>
+</html>

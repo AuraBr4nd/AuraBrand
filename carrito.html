@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - AURA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Estilos previos omitidos por brevedad */
+        /* Agrega aquí los estilos que ya tenías */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AURA</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="contacto.html" target="_blank">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="carrito" class="seccion">
+        <h2>Tu Carrito</h2>
+        <div class="cart-container">
+            <div id="cart-items"></div>
+            <div id="cart-total">
+                <h3>Total: <span id="total-price">$0.00</span></h3>
+            </div>
+            <div class="button-container">
+                <button class="button" onclick="proceedToCheckout()">Pagar</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 AURA - Ropa para Gimnasio</p>
+    </footer>
+
+    <script>
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        function updateCartDisplay() {
+            const cartContainer = document.getElementById('cart-items');
+            cartContainer.innerHTML = ''; // Limpiar la vista anterior
+
+            if (cartItems.length === 0) {
+                cartContainer.innerHTML = '<p>El carrito está vacío.</p>';
+                document.getElementById('total-price').innerText = '$0.00'; // Actualizar el total
+                return;
+            }
+
+            cartItems.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.classList.add('cart-item');
+                itemElement.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>Precio: $${item.price.toFixed(2)}</p>
+                        <p>Cantidad: <input type="number" class="cart-item-quantity" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)"></p>
+                    </div>
+                    <button class="button delete-button" onclick="removeFromCart(${index})">Eliminar</button>
+                `;
+                cartContainer.appendChild(itemElement);
+            });
+
+            // Actualizar el total
+            const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('total-price').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function updateQuantity(index, quantity) {
+            if (quantity < 1) quantity = 1;
+            cartItems[index].quantity = Number(quantity);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCartDisplay();
+        }
+
+        function removeFromCart(index) {
+            cartItems.splice(index, 1);
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            updateCartDisplay();
+        }
+
+        function proceedToCheckout() {
+            alert('Procediendo al pago...');
+        }
+
+        updateCartDisplay(); // Inicializar la vista del carrito
+    </script>
+</body>
+</html>
+<style>
+     /* Estilos generales */
+ html, body {
+    height: 100%; /* Asegurarse de que el HTML y el body ocupen el 100% de la altura */
+    margin: 0; /* Sin márgenes */
+}
+
+body {
+    display: flex; /* Usar flexbox */
+    flex-direction: column; /* Alinear elementos verticalmente */
+}
+
+#carrito {
+    flex: 1; /* Permitir que esta sección ocupe el espacio restante */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar horizontalmente */
+    padding: 20px;
+}
+
+.cart-container {
+    background-color: #ffffff; /* Color de fondo del contenedor */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para el contenedor */
+    padding: 20px; /* Espaciado interno */
+    width: 100%; /* Ancho completo */
+    max-width: 600px; /* Ancho máximo para el carrito */
+}
+
+#cart-items {
+    margin-bottom: 20px;
+    text-align: center; /* Centrar texto */
+}
+
+.cart-item {
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    justify-content: space-between; /* Espacio entre imagen y detalles */
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd; /* Borde alrededor de cada producto */
+    border-radius: 5px; /* Esquinas redondeadas */
+    background-color: #f9f9f9; /* Color de fondo */
+}
+
+.cart-item-image {
+    width: 100px; /* Ancho de la imagen */
+    height: auto; /* Mantener la proporción */
+    border-radius: 5px; /* Esquinas redondeadas para la imagen */
+    margin-right: 15px; /* Espaciado a la derecha */
+}
+
+.cart-item-details {
+    text-align: left; /* Alinear texto a la izquierda */
+    flex-grow: 1; /* Para ocupar el espacio disponible */
+}
+
+.cart-item-quantity {
+    width: 50px; /* Ancho del input de cantidad */
+    margin-left: 15px; /* Espaciado a la izquierda */
+}
+
+#cart-total {
+    font-size: 24px; /* Tamaño de fuente del total */
+    font-weight: bold; /* Negrita */
+    margin: 20px 0; /* Espaciado */
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Separar botones del total */
+    width: 100%;
+    max-width: 600px; /* Ancho máximo para el contenedor de botones */
+}
+
+.button {
+    background-color: #000000; /* Color del botón */
+    color: white;
+    border: none;
+    padding: 12px 24px; /* Espaciado del botón */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 16px; /* Tamaño de fuente */
+    flex-grow: 1; /* Para ocupar el espacio disponible */
+    margin: 0 10px; /* Espaciado entre botones */
+}
+
+.button:hover {
+    background-color: #000000; /* Color del botón al pasar el mouse */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+.delete-button {
+    background-color: #ff4d4d; /* Color del botón de eliminar */
+}
+
+.delete-button:hover {
+    background-color: #ff1a1a; /* Color del botón de eliminar al pasar el mouse */
+}
+
+/* Estilos para la notificación modal */
+.notification-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Fijo en la pantalla */
+    top: 50%; /* Centrado vertical */
+    left: 50%; /* Centrado horizontal */
+    transform: translate(-50%, -50%); /* Centrar usando transform */
+    background-color: #4CAF50; /* Color de fondo de la notificación */
+    color: white; /* Color del texto */
+    padding: 20px; /* Espaciado interno */
+    border-radius: 8px; /* Esquinas redondeadas */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra */
+    z-index: 1000; /* Asegurarse de que esté en frente */
+    text-align: center; /* Centrar el texto */
+}
+
+footer {
+    background-color: #333; /* Color de fondo del footer */
+    color: white; /* Color del texto del footer */
+    text-align: center; /* Centrar el texto */
+    padding: 10px 0; /* Espaciado en el footer */
+}
+
+</style>
